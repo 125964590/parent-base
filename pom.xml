@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ht.base</groupId>
+    <artifactId>parent-base</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <guava.version>18.0</guava.version>
+        <jdk.version>1.8</jdk.version>
+        <lombok.version>1.16.22</lombok.version>
+        <apache.commons.version>4.1</apache.commons.version>
+        <apollo.version>0.8.0</apollo.version>
+        <swagger2.version>2.7.0</swagger2.version>
+        <mysql.version>5.1.21</mysql.version>
+        <joda-time>2.9.6</joda-time>
+        <fastjson>1.2.32</fastjson>
+        <druid.version>1.0.29</druid.version>
+        <default.version>1.0-${project.environment}-SNAPSHOT</default.version>
+    </properties>
+
+    <modules>
+        <module>parent-base-cloud</module>
+        <module>parent-base-boot</module>
+    </modules>
+
+
+    <dependencies>
+        <!-- 引入lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <!-- 统一定义子类包定义版本 -->
+        <dependencies>
+            <!-- 引入apache工具类 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${apache.commons.version}</version>
+            </dependency>
+            <!-- apollpo配置中心 -->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${apollo.version}</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson}</version>
+            </dependency>
+            <!-- 时间工具包 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time}</version>
+            </dependency>
+            <!-- 添加数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- 添加mysql -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- 添加guava组件-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- 统一自定义包的版本 -->
+            <dependency>
+                <groupId>com.ht.base.start</groupId>
+                <artifactId>spring-boot-start-web-tool</artifactId>
+                <version>${default.version}</version>
+            </dependency>
+            <!-- swagger2 -->
+            <dependency>
+                <groupId>com.ht.base.start</groupId>
+                <artifactId>spring-boot-start-swagger2</artifactId>
+                <version>${default.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ht.base.start</groupId>
+                <artifactId>spring-boot-annotation</artifactId>
+                <version>${default.version}</version>
+            </dependency>
+            <!-- 自定义elastic start -->
+            <dependency>
+                <groupId>com.ht.base.spring</groupId>
+                <artifactId>spring-boot-start-elastic</artifactId>
+                <version>${default.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ht.base.common</groupId>
+                <artifactId>base-common</artifactId>
+                <version>${default.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <project.environment>dev</project.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <project.environment>test</project.environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <project.environment>release</project.environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>product</id>
+            <properties>
+                <project.environment>product</project.environment>
+            </properties>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>huatu-ztk-release</id>
+            <name>Internal Releases</name>
+            <url>http://123.103.86.53:8089/nexus/content/repositories/huatu-ztk-release/</url>
+        </repository>
+        <snapshotRepository>
+            <id>huatu-ztk-snapshot</id>
+            <name>Internal Snapshots</name>
+            <url>http://123.103.86.53:8089/nexus/content/repositories/huatu-ztk-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                    <!--构建过程中显示详细信息-->
+                    <verbose>true</verbose>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <inherited>true</inherited>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>${jdk.version}</source>
+                            <target>${jdk.version}</target>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+</project>
