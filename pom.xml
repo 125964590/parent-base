@@ -112,6 +112,11 @@
                 <artifactId>base-common</artifactId>
                 <version>${default.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ht.base.user</groupId>
+                <artifactId>user-common</artifactId>
+                <version>${default.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
