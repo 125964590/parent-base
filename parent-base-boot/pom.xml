@@ -51,6 +51,7 @@
     </dependencyManagement>
 
     <repositories>
+
         <repository>
             <id>huatu-ztk-snapshot</id>
             <url>http://123.103.86.53:8089/nexus/content/repositories/huatu-ztk-snapshot/</url>
