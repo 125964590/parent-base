@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>parent-base-boot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${default.version}</version>
 
     <packaging>pom</packaging>
 
