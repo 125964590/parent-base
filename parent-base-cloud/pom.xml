@@ -13,7 +13,7 @@
     <parent>
         <groupId>com.ht.base</groupId>
         <artifactId>parent-base-boot</artifactId>
-        <version>${default.version}</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <properties>
