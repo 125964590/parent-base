@@ -101,12 +101,6 @@
                 <artifactId>spring-boot-annotation</artifactId>
                 <version>${default.version}</version>
             </dependency>
-            <!-- 自定义elastic start -->
-            <dependency>
-                <groupId>com.ht.base.spring</groupId>
-                <artifactId>spring-boot-start-elastic</artifactId>
-                <version>${default.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.ht.base.common</groupId>
                 <artifactId>base-common</artifactId>
