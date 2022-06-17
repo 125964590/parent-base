@@ -19,7 +19,7 @@
         <swagger2.version>2.7.0</swagger2.version>
         <mysql.version>5.1.21</mysql.version>
         <joda-time>2.9.6</joda-time>
-        <fastjson>1.2.32</fastjson>
+        <fastjson>1.2.83</fastjson>
         <druid.version>1.0.29</druid.version>
         <default.version>1.0-${project.environment}-SNAPSHOT</default.version>
     </properties>
